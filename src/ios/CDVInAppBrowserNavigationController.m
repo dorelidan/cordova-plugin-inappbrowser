@@ -32,7 +32,11 @@
 - (void) viewDidLoad {
 
     CGRect statusBarFrame = [self invertFrameIfNeeded:[UIApplication sharedApplication].statusBarFrame];
-    statusBarFrame.size.height = STATUSBAR_HEIGHT;
+    if (@available(iOS 11.0, *)) {
+        statusBarFrame.size.height = UIApplication.sharedApplication.keyWindow.safeAreaInsets.top;
+    } else {
+        statusBarFrame.size.height = STATUSBAR_HEIGHT;
+    }
     // simplified from: http://stackoverflow.com/a/25669695/219684
 
     UIToolbar* bgToolbar = [[UIToolbar alloc] initWithFrame:statusBarFrame];
